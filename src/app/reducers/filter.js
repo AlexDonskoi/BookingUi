@@ -13,8 +13,9 @@ const filterGroup = (items, key, isChecked) =>{
 export const filter = (state = {}, action) => {
   switch (action.type) {
     case actions.TOGGLE_FILTER_ITEM:
-      var groupFilter = {};
-      groupFilter[action.groupKey] = filterGroup(state[action.groupKey], action.itemKey, action.isChecked)
+      var groupFilter = {
+            [action.groupKey]: filterGroup(state[action.groupKey], action.itemKey, action.isChecked)
+      }
       return Object.assign({}, state, groupFilter);
     case actions.SET_START_DATE:
       return Object.assign({}, state, 

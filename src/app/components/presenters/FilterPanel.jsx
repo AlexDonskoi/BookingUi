@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
 import { Panel, ListGroup, ListGroupItem, Input, Grid, Row, Col, Button } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 
@@ -26,6 +25,7 @@ var FilterPanel = React.createClass({
   return (
       <div>
         <Panel header="Search" bsStyle="primary">
+            <label className="control-label">From:</label>            
             <DatePicker 
                 selected={this.state.startDate}
                 startDate={this.state.startDate}

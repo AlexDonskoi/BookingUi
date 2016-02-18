@@ -44,6 +44,23 @@ export const hotelsLoadSuccess = (items) => {
     }
 }
 
+export const openPage = (pageType, hotel) => {
+    return {
+        type: actions.OPEN_PAGE,
+        data:{
+            pageType,
+            hotel
+        }
+    }
+}
+
+export const closePage = (index) => {
+    return {
+        type: actions.CLOSE_PAGE,
+        index
+    }
+}
+
 export const search = () => {
   return function (dispatch, getState) {
     dispatch(hotelsLoadStarted())

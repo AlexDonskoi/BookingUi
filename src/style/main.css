@@ -1,4 +1,3 @@
-.schedule td
-{
-    height: 30px;
+.inactive {
+    display: none;
 }
