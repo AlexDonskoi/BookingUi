@@ -3,9 +3,15 @@ import { Grid, Row, Col } from 'react-bootstrap'
 import Filter from './Filter'
 import HotelsList from './HotelsList'
 import Pages from './Pages'
+import Error from './Error'
 
 const App = () => (
   <Grid>
+    <Row>
+        <Col lg={12} md={12}>
+            <Error />    
+        </Col>        
+    </Row>
     <Row>
         <Col lg={3} md={3}>
             <Filter />

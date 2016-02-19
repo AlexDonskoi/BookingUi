@@ -1,5 +1,6 @@
 import actions from './constants';
-import { getHotels } from '../services/hotelService';
+import { getHotels, getHotel } from '../services/hotelService';
+import { sendBooking } from '../services/bookingService';
 
 
 export const toggleFilterItem = (groupKey, itemKey, isChecked) => {
@@ -11,45 +12,45 @@ export const toggleFilterItem = (groupKey, itemKey, isChecked) => {
     }
 }
 
-export const setStartDate = (date) => {
+export const setFilter = (filter) => {
     return {
-        type: actions.SET_START_DATE,
-        date
+        type: actions.SET_FILTER,
+        filter
     }
 }
 
-export const setEndDate = (date) => {
+export const setPager = (pager) => {
     return {
-        type: actions.SET_END_DATE,
-        date
+        type: actions.SET_PAGER,
+        pager
     }
 }
 
-export const hotelsLoadStarted = () => {
+export const loadingStart = () => {
     return {
-        type: actions.HOTELS_LOAD_STARTED
+        type: actions.LOADING_START
     }
 }
 
-export const hotelsLoadError = () => {
+export const loadingFinish = () => {
     return {
-        type: actions.HOTELS_LOAD_ERROR
+        type: actions.LOADING_FINISH
     }
 }
 
-export const hotelsLoadSuccess = (items) => {
+export const setHotels = (items) => {
     return {
-        type: actions.HOTELS_LOAD_SUCCESS,
+        type: actions.SET_HOTELS,
         items
     }
 }
 
-export const openPage = (pageType, hotel) => {
+export const openPage = (pageType, info) => {
     return {
         type: actions.OPEN_PAGE,
         data:{
             pageType,
-            hotel
+            info
         }
     }
 }
@@ -63,10 +64,55 @@ export const closePage = (index) => {
 
 export const search = () => {
   return function (dispatch, getState) {
-    dispatch(hotelsLoadStarted())
+    dispatch(loadingStart())
         return getHotels(getState().filter)
-            .then(items =>
-                dispatch(hotelsLoadSuccess(items))
-      )
+            .then(items => {
+                dispatch(setHotels(items));
+                dispatch(setPager({ total: 25 }));
+                dispatch(loadingFinish())
+            },
+            error => {
+                dispatch(loadingFinish())
+                dispatch(setError(error))
+            })
   }
+}
+
+export const showHotel = (hotelCode, pageType) => {
+  return function (dispatch, getState) {
+    dispatch(loadingStart())
+        return getHotel(hotelCode)
+            .then(item =>{
+                dispatch(openPage(pageType, item))
+                dispatch(loadingFinish())
+            },
+            error => {
+                dispatch(loadingFinish())
+                dispatch(setError(error))
+            })
+  }
+}
+
+export const tryBooking = (bookingInfo, bookingPageType) => {
+  return function (dispatch, getState) {
+    dispatch(loadingStart())
+        return sendBooking(bookingInfo)
+            .then(item =>{
+                dispatch(openPage(bookingPageType, bookingInfo))
+                dispatch(closePage(getState().pages.length - 2))
+                dispatch(loadingFinish())
+            },
+            error => {
+                dispatch(loadingFinish())
+                dispatch(setError(error))
+            })
+  }
+}
+
+
+export const setError = (content) => {
+    return {
+        type: actions.SET_ERROR,
+        content
+    }
 }

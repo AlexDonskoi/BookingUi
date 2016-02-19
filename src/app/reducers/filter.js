@@ -17,16 +17,8 @@ export const filter = (state = {}, action) => {
             [action.groupKey]: filterGroup(state[action.groupKey], action.itemKey, action.isChecked)
       }
       return Object.assign({}, state, groupFilter);
-    case actions.SET_START_DATE:
-      return Object.assign({}, state, 
-      {
-          startDate: actions.date
-      });
-    case actions.SET_END_DATE:
-      return Object.assign({}, state, 
-      {
-          endDate: actions.date
-      });
+    case actions.SET_FILTER:
+      return Object.assign({}, state, action.filter);
     default:
       return state;
   }

@@ -29,10 +29,19 @@ const mapDispatchToProps = (dispatch) => {
         onItemSelectChanged: (groupKey, itemKey, isChecked) => {
             dispatch(
                 actions.toggleFilterItem(groupKey, itemKey, isChecked)
+            )
+            dispatch(
+                actions.setPager({ activePage: 1})
             );
             dispatch(
                 actions.search()
             )
+        },
+        onFilterChanged: (filter) => {
+            dispatch(
+                actions.setFilter(filter))
+            dispatch(
+                actions.setFilter({ activePage: 1}))
         },
         onSearch: () => 
             dispatch(

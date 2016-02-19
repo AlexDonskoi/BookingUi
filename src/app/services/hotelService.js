@@ -6,7 +6,18 @@ let hotels = [
         "Name": "Hotel One",
         "Description": "Hotel One description",
         "Image": "#",
-        "RoomTypes":[]
+        "RoomTypes":[{
+            "Id": 1,
+            "Name": "Type One",
+            "RoomFacilities": ['AIR_CONDITIONER', 'TV'],
+            "Rooms": 5
+        },
+        {
+            "Id": 2,
+            "Name": "Type Two",
+            "RoomFacilities": ['TV'],
+            "Rooms": 8
+        }]
     },
     {
         "Code": "two",
@@ -21,9 +32,8 @@ let hotels = [
 export const getHotels = (filter) => {
     return new Promise(
         (resolve, reject) => 
-            timeout(()  => resolve(
-                hotels
-            ))
+            timeout(()  =>resolve(hotels)
+            )
     )
 }
 

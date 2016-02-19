@@ -3,20 +3,14 @@ import { Panel, ListGroup, ListGroupItem, Input, Grid, Row, Col, Button } from '
 import DatePicker from 'react-datepicker'
 
 var FilterPanel = React.createClass({
-  getInitialState: function(){
-    return {
-      startDate: this.props.startDate,
-      endDate: this.props.endDate
-    };
-  },
-
+  
   handleStartChange: function(date){
-    this.setState({
+    this.props.onFilterChanged({
       startDate: date
     });
   },
   handleEndChange: function(date){
-    this.setState({
+    this.props.onFilterChanged({
       endDate: date
     });
   },
@@ -27,16 +21,16 @@ var FilterPanel = React.createClass({
         <Panel header="Search" bsStyle="primary">
             <label className="control-label">From:</label>            
             <DatePicker 
-                selected={this.state.startDate}
-                startDate={this.state.startDate}
-                endDate={this.state.endDate} 
+                selected={this.props.startDate}
+                startDate={this.props.startDate}
+                endDate={this.props.endDate} 
                 isClearable={true} 
                 onChange={this.handleStartChange}/>
             <label className="control-label">To:</label>            
             <DatePicker 
-                selected={this.state.endDate}
-                startDate={this.state.startDate}
-                endDate={this.state.endDate}
+                selected={this.props.endDate}
+                startDate={this.props.startDate}
+                endDate={this.props.endDate}
                 isClearable={true}
                 onChange={this.handleEndChange} />
             <Button bsStyle="primary" onClick={this.props.onSearch}>Search</Button>

@@ -2,7 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import HotelInfo from './presenters/HotelInfo'
+import BookingInfo from './presenters/BookingInfo'
+import BookingForm from './BookingForm'
 import pageTypes from './PageTypes'
+
 import { Button, ButtonToolbar, Grid, Row, Col, Panel } from 'react-bootstrap'
 
 
@@ -21,10 +24,14 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const getPage = ( { pageType, hotel }) => {
+const getPage = ( { pageType, info }) => {
     switch(pageType){
        case pageTypes.HOTEL_INFO: 
-        return  <HotelInfo hotel={hotel} />
+        return  <HotelInfo hotel={info} />
+       case pageTypes.BOOKING_FORM: 
+        return  <BookingForm hotel={info} />
+       case pageTypes.BOOKING_FORM: 
+        return  <BookingForm info={info} />
        default:
         return <div />
     }
