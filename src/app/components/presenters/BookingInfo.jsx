@@ -2,18 +2,18 @@ import React, { PropTypes } from 'react'
 import { Grid, Row, Col } from 'react-bootstrap'
 
 const BookingInfo = ( { details }) =>  (
-        <Grid>
+        <div>
         {
             Object.keys(details)
                 .map(key => (
-                     <Row>
+                     <Row key={key}>
                         <Col lg={9} md={9}>
                             {key}: {details[key]}
                         </Col>
                     </Row>
                 ) )
         }
-        </Grid>
+        </div>
 );   
 
 export default BookingInfo

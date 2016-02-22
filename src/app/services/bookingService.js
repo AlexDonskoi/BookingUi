@@ -7,3 +7,11 @@ export const sendBooking = (state) => {
             )
     )
 }
+
+export const findBooking = (bookingNumber) => {
+    return new Promise(
+        (resolve, reject) => 
+            timeout(()  =>resolve(bookingNumber)
+            )
+    )
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button, Col, Row, Grid, Pagination, ButtonToolbar, Modal } from 'react-bootstrap'
+import { Button, Col, Row, Grid, Pagination, ButtonToolbar, Modal, Tab } from 'react-bootstrap'
 import * as actions from '../actions'
 import pageTypes from './pageTypes'
 import HotelCard from './presenters/HotelCard'
@@ -24,7 +24,8 @@ const mapDispatchToProps = (dispatch) => {
             ),
         onAvailabilityClick: (hotel) => 
             dispatch(
-                actions.openPage(pageTypes.BOOKING_FORM, hotel)
+                actions.openPage(pageTypes.BOOKING_FORM, 
+                    Object.assign({}, hotel, { title: "Booking"}))
             ),
         onPageClick: (pageIndex) => {
             dispatch(
@@ -50,7 +51,7 @@ const mapDispatchToProps = (dispatch) => {
 
 
 const hotelList = ({ isLoaded, items, isHidden, totalPages, activePage, onHeaderClick, onAvailabilityClick, onPageClick, onSortClick }) => (
-    <Col lg={9} md={9} className={ isHidden ? "inactive modal-container" : "modal-container"} >
+    <div lg={9} md={9} className={ "modal-container" }>
         <Modal
           show={isLoaded}
           aria-labelledby="contained-modal-title"
@@ -79,7 +80,7 @@ const hotelList = ({ isLoaded, items, isHidden, totalPages, activePage, onHeader
           items={totalPages}
           activePage={activePage}
           onSelect={(e, selectedEvt) => onPageClick(selectedEvt.eventKey)} />
-    </Col>
+    </div>
 )
 
 const HotelsList = connect(

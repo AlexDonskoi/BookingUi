@@ -1,6 +1,6 @@
 import actions from './constants';
 import { getHotels, getHotel } from '../services/hotelService';
-import { sendBooking } from '../services/bookingService';
+import { sendBooking, findBooking } from '../services/bookingService';
 
 
 export const toggleFilterItem = (groupKey, itemKey, isChecked) => {
@@ -55,6 +55,17 @@ export const openPage = (pageType, info) => {
     }
 }
 
+export const replacePage = (index, pageType, info) => {
+    return {
+        type: actions.REPLACE_PAGE,
+        data:{
+            pageType,
+            info
+        },
+        index
+    }
+}
+
 export const closePage = (index) => {
     return {
         type: actions.CLOSE_PAGE,
@@ -83,7 +94,8 @@ export const showHotel = (hotelCode, pageType) => {
     dispatch(loadingStart())
         return getHotel(hotelCode)
             .then(item =>{
-                dispatch(openPage(pageType, item))
+                dispatch(openPage(pageType, 
+                    Object.assign({}, item, { title: item.Code})))
                 dispatch(loadingFinish())
             },
             error => {
@@ -93,13 +105,15 @@ export const showHotel = (hotelCode, pageType) => {
   }
 }
 
-export const tryBooking = (bookingInfo, bookingPageType) => {
+export const tryBooking = (bookingInfo, index, bookingPageType) => {
   return function (dispatch, getState) {
     dispatch(loadingStart())
         return sendBooking(bookingInfo)
             .then(item =>{
-                dispatch(openPage(bookingPageType, bookingInfo))
-                dispatch(closePage(getState().pages.length - 2))
+                dispatch(replacePage(
+                    index,
+                    bookingPageType, 
+                    Object.assign({}, bookingInfo, { title: "Confirmation"})))
                 dispatch(loadingFinish())
             },
             error => {
@@ -108,11 +122,37 @@ export const tryBooking = (bookingInfo, bookingPageType) => {
             })
   }
 }
+
+export const searchBooking = (bookingNumber, bookingPageType) => {
+  return function (dispatch, getState) {
+    dispatch(loadingStart())
+        return findBooking(bookingNumber)
+            .then(item =>{
+                dispatch(openPage(
+                    bookingPageType, 
+                    Object.assign({}, {"number": bookingNumber}, { title: "Confirmation"})))
+                dispatch(loadingFinish())
+            },
+            error => {
+                dispatch(loadingFinish())
+                dispatch(setError(error))
+            })
+  }
+}
+
 
 
 export const setError = (content) => {
     return {
         type: actions.SET_ERROR,
         content
+    }
+}
+
+
+export const selectTab = (key) => {
+    return {
+        type: actions.SELECT_TAB,
+        key
     }
 }

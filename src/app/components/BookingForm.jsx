@@ -11,9 +11,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onBooking: (state) => 
+        onBooking: (state, index) => 
         dispatch(
-             actions.tryBooking(state, pageTypes.BOOKING_INFO)
+             actions.tryBooking(state, index, pageTypes.BOOKING_INFO)
         )
     }
 }
@@ -51,12 +51,12 @@ let BookingForm = React.createClass({
     },
     
     bookingHandle: function(){
-        this.props.onBooking(this.state);
+        this.props.onBooking(this.state, this.props.index);
     },   
     
     render: function(){
         let { hotel }= this.props;
-        return <Grid>
+        return <div>
             <Row>
                 <Col lg={5} md={5}>
                     {hotel.Name}
@@ -72,7 +72,7 @@ let BookingForm = React.createClass({
                    <Button bsStyle="primary" onClick={this.bookingHandle}>Booking</Button>
                 </Col>
             </Row>
-        </Grid>
+        </div>
    }
 })
 

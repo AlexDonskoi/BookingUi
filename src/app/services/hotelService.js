@@ -32,7 +32,7 @@ let hotels = [
 export const getHotels = (filter) => {
     return new Promise(
         (resolve, reject) => 
-            timeout(()  =>resolve(hotels)
+            timeout(()  =>reject("error")
             )
     )
 }
