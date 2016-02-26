@@ -4,6 +4,7 @@ import { Button, Col, Row, Grid, Pagination, ButtonToolbar, Modal, Tab } from 'r
 import * as actions from '../actions'
 import pageTypes from './pageTypes'
 import HotelCard from './presenters/HotelCard'
+import { getHotelFacilitiesByKeys } from '../services/SettingsService'
 
 
 const mapStateToProps = (state) => {
@@ -18,14 +19,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onHeaderClick: (hotel) => 
+        onClick: (hotel) => 
             dispatch(
-                actions.showHotel(hotel.Code, pageTypes.HOTEL_INFO)
-            ),
-        onAvailabilityClick: (hotel) => 
-            dispatch(
-                actions.openPage(pageTypes.BOOKING_FORM, 
-                    Object.assign({}, hotel, { title: "Booking"}))
+                actions.showHotel(hotel.hotelCode, pageTypes.HOTEL_INFO)
             ),
         onPageClick: (pageIndex) => {
             dispatch(
@@ -50,7 +46,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-const hotelList = ({ isLoaded, items, isHidden, totalPages, activePage, onHeaderClick, onAvailabilityClick, onPageClick, onSortClick }) => (
+const hotelList = ({ isLoaded, items, isHidden, totalPages, activePage, onClick, onPageClick, onSortClick }) => (
     <div lg={9} md={9} className={ "modal-container" }>
         <Modal
           show={isLoaded}
@@ -65,14 +61,15 @@ const hotelList = ({ isLoaded, items, isHidden, totalPages, activePage, onHeader
         </ButtonToolbar>
         
         {items.map(it => {
-            var hotelProperties = {
-                hotel: it,
-                availableCount: it.RoomTypes.reduce((aggr, it, ind) => aggr + it.Rooms, 0),
-                onHeaderClick: () => onHeaderClick(it),
-                onAvailabilityClick: () => onAvailabilityClick(it)
-            }
+            var hotelProperties = Object.assign({}, 
+                it,
+                {
+                    onClick: () => onClick(it),
+                    facilities: getHotelFacilitiesByKeys(it.facilities)
+                            .map(f => f.Text)
+                })
             return(
-                <HotelCard key={it.Code} {...hotelProperties} />
+                <HotelCard key={it.hotelCode} {...hotelProperties} />
             )}
         )}
         <Pagination

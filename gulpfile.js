@@ -16,7 +16,7 @@ var paths = {
   app: ['src/app/**/*'],
   tests: ['tests/**/*.js'],
   css: ['bower_components/**/*.css', "src/style/**/*.css", 'node_modules/react-datepicker/dist/react-datepicker.min.css'],
-  fonts: ['bower_components/bootstrap/dist/fonts/*.{eot,svg,ttf,woff,woff2}']
+  fonts: ['bower_components/**/dist/**/*.{eot,svg,ttf,woff,woff2}']
 };
  
 gulp.task('babel', function() {

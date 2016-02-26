@@ -1,47 +1,58 @@
-import timeout from './stub/timeout'
+import fetch from 'isomorphic-fetch'
+import moment from 'moment'
+import Settings from './Settings'
 
-let hotels = [
+const getFilterQuery = (filter) => {
+    let queryStringArray = [];
+    if(filter.startDate)
     {
-        "Code": "one",
-        "Name": "Hotel One",
-        "Description": "Hotel One description",
-        "Image": "#",
-        "RoomTypes":[{
-            "Id": 1,
-            "Name": "Type One",
-            "RoomFacilities": ['AIR_CONDITIONER', 'TV'],
-            "Rooms": 5
-        },
-        {
-            "Id": 2,
-            "Name": "Type Two",
-            "RoomFacilities": ['TV'],
-            "Rooms": 8
-        }]
-    },
-    {
-        "Code": "two",
-        "Name": "Hotel Two",
-        "Description": "Hotel Two description",
-        "Image": "#",
-        "RoomTypes":[]
+        queryStringArray.push(`CheckInDate=${moment(filter.startDate).format(Settings.DateFormat)}`)
     }
-]
-
-
-export const getHotels = (filter) => {
-    return new Promise(
-        (resolve, reject) => 
-            timeout(()  =>reject("error")
-            )
-    )
+    if(filter.endDate)
+    {
+        queryStringArray.push(`CheckOutDate=${moment(filter.endDate).format(Settings.DateFormat)}`)
+    }
+    
+    Settings.SearchGroups.forEach(it => {
+        var values = filter[it.Key];
+        if(values)
+        {
+           queryStringArray.push(`${it.Key}=${values}`) 
+        }
+    });
+    return queryStringArray;
 }
 
-export const getHotel = (hotelCode) => {
-    return new Promise(
-        (resolve, reject) => 
-            timeout(()  => resolve(
-               hotels.find(it => it.Code == hotelCode)
-            ))
-    )
+export const getHotels = (filter, pager) => {
+    let queryStringArray = getFilterQuery(filter);
+    
+    if(pager.activePage)
+    {
+        queryStringArray.push(`Page=${pager.activePage}`)
+    }
+    if(pager.perPage)
+    {
+        queryStringArray.push(`PageSize=${pager.perPage}`)
+    }
+    
+    return fetch(`${Settings.Api}/src/app/services/stub/hotels.json?${queryStringArray.join("&")}`, 
+    {
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    })
+    .then(response => response.json())
+}
+
+export const getHotel = (hotelCode, filter) => {
+    let queryStringArray = getFilterQuery(filter);
+    return fetch(`${Settings.Api}/src/app/services/stub/hotels/${hotelCode}.json?${queryStringArray.join("&")}`, 
+    {
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    })
+    .then(response => response.json())
 }

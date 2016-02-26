@@ -2,13 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import FilterPanel from './presenters/FilterPanel'
-import SearchGroups from '../services/stub/SearchGroups'
+import Settings from '../services/Settings'
 
 const mapStateToProps = (state) => {
     return {
         startDate: state.filter.startDate,
         endDate: state.filter.endDate,
-        searchGroups: SearchGroups.map(grp => {
+        searchGroups: Settings.SearchGroups.map(grp => {
             return {
                 Key: grp.Key,
                 Text: grp.Text,

@@ -1,0 +1,78 @@
+{
+    "Api": "http://localhost:8988",
+    "DateFormat": "YYYY-MM-DD",
+    "SortBy":[
+        {
+            "Key": "Name",
+            "Text": "Name"
+        }
+    ],
+    "SearchGroups": [
+        {
+            "Key": "BedTypes",
+            "Text": "Bedroom type",
+            "Items":[
+                {
+                    "Key": "Single",
+                    "Text": "Single"
+                },
+                {
+                    "Key": "Double",
+                    "Text": "Double"
+                },
+                {
+                    "Key": "Twin",
+                    "Text": "Twin"
+                }
+            ]
+        },
+        {
+            "Key": "HotelFacilities",
+            "Text": "Facility",
+            "Items":[
+                {
+                    "Key": "WaterSlide",
+                    "Text": "Water Slide"
+                },
+                {
+                    "Key": "SwimmingPool",
+                    "Text": "Swimming Pool"
+                },
+                {
+                    "Key": "TennisCourt",
+                    "Text": "Tennis Court"
+                }
+            ]
+        },
+        {
+            "Key": "RoomFacilities",
+            "Text": "Room Facility",
+            "Items":[
+                {
+                    "Key": "Tv",
+                    "Text": "Tv"
+                },
+                {
+                    "Key": "Balcony",
+                    "Text": "Balcony"
+                },
+                {
+                    "Key": "AirConditioner",
+                    "Text": "Air Conditioner"
+                },
+                {
+                    "Key": "StreetView",
+                    "Text": "Street View"
+                },
+                {
+                    "Key": "SwimmingPoolView",
+                    "Text": "Swimming Pool View"
+                },
+                {
+                    "Key": "SeaView",
+                    "Text": "Sea View"
+                }
+            ]
+        }
+    ] 
+}  

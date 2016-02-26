@@ -8,7 +8,7 @@ const Error = React.createClass({
             return <div />
          return (
             <Alert bsStyle="danger" onDismiss={onDismiss}>
-                {content}
+                {content.message}
             </Alert>)
     }
 });

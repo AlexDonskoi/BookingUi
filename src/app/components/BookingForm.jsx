@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button, Col, Row, Grid, Input } from 'react-bootstrap'
+import { Button, Col, Row, Grid, Input, Label, Table } from 'react-bootstrap'
 import * as actions from '../actions'
 import pageTypes from './pageTypes'
+import { getBedTypeByKey, getRoomFacilitiesByKeys } from '../services/SettingsService'
 
 const mapStateToProps = (state) => {
     return {
@@ -18,14 +19,26 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const BookingItem = ({ Id, Name, Rooms, selectedCount, onRoomSelected }) =>{
-    let options = Array.from({ length: Rooms}, (v, k) => k)
-    return (<Row>
-        <Col lg={5} md={5}>
-            { Name }
-        </Col>
-        <Col lg={4} md={4}>
-            <Input type="select" label="Room Count"
+const BookingItem = ({ roomType, currency, selectedCount, onRoomSelected }) =>{
+    let options = Array.from({ length: roomType.roomsAvailable}, (v, k) => k)
+    return (<tr>
+        <td>
+            <h4>{ roomType.name }</h4>
+            <p>
+                <Label>Bed: { (getBedTypeByKey(roomType.bedType) || {}).Text }</Label>
+            </p>
+            <p>
+                { getRoomFacilitiesByKeys(roomType.facilities)
+                    .map((f, ind) => (
+                        <Label key={ind}>{f.Text}</Label>
+                    )) }
+            </p>
+        </td>
+        <td>
+            { roomType.price } {currency}
+        </td>
+        <td lg={4} md={4}>
+            <Input type="select"
                 onChange={e => onRoomSelected(e.target.value)}
                 value={selectedCount}>
                 {
@@ -33,8 +46,8 @@ const BookingItem = ({ Id, Name, Rooms, selectedCount, onRoomSelected }) =>{
                         (<option key={it} value={it}>{it}</option>))
                 }
             </Input>
-        </Col>
-    </Row>)
+        </td>
+    </tr>)
 }
 
 
@@ -56,22 +69,36 @@ let BookingForm = React.createClass({
     
     render: function(){
         let { hotel }= this.props;
+        let selectedRooms = Object.keys(this.state).reduce((aggr, it) => aggr + this.state[it], 0);
         return <div>
             <Row>
-                <Col lg={5} md={5}>
-                    {hotel.Name}
+                <Col lg={10} md={10}>
+                    <h3>{hotel.name}</h3>
                 </Col>
             </Row>
+            <Table striped bordered condensed hover>
+            <thead>
+            <tr>
+                <th lg={5} md={5}>Room type</th>
+                <th lg={3} md={3}>Price</th>
+                <th lg={4} md={4}>Room Count</th>
+            </tr>
+            </thead>
+            <tbody>
             {
-                hotel.RoomTypes.map(type => (
-                   <BookingItem key={type.Id} {...type} selectedCount={this.state[type.Id]} onRoomSelected={(count) => this.roomCountHandle(type.Id, count)} /> 
+                hotel.roomTypes.map(type => (
+                   <BookingItem key={type.id} roomType={type} currency={hotel.currencyCode} selectedCount={this.state[type.Id]} onRoomSelected={(count) => this.roomCountHandle(type.Id, count)} /> 
                 ) )
             }
-            <Row>
-               <Col lg={4} md={4} lgOffset={5} mdOffset={5}>
-                   <Button bsStyle="primary" onClick={this.bookingHandle}>Booking</Button>
-                </Col>
-            </Row>
+            <tr>
+                <td colSpan={2}>
+                </td>
+                <td>
+                    <Button bsStyle="primary" disabled={!selectedRooms} onClick={this.bookingHandle}>Booking</Button>
+                </td>
+            </tr>
+            </tbody>
+            </Table>
         </div>
    }
 })

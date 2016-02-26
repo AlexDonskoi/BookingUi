@@ -1,0 +1,28 @@
+[
+  {
+    "hotelCode": "epic",
+    "name": "EPIC Miami, a Kimpton Hotel ",
+    "location": "Miami, Florida, USA",
+    "imageUrl": "http://goo.gl/g4jLbY",
+    "facilities": [
+      "SwimmingPool",
+      "WaterSlide"
+    ]
+  },
+  {
+    "hotelCode": "grand-ashton",
+    "name": "Hotel Aston La Scala",
+    "location": "Nice, France",
+    "imageUrl": "http://q-ec.bstatic.com/images/hotel/square200/550/5508619.jpg",
+    "facilities": [
+      "TennisCourt"
+    ]
+  },
+  {
+    "hotelCode": "four-season",
+    "name": "Beverly Wilshire, A Four Seasons Hotel",
+    "location": "Beverly Hills, Los Angeles, California, USA",
+    "imageUrl": "http://q-ec.bstatic.com/images/hotel/square200/609/60987551.jpg",
+    "facilities": []
+  }
+]

@@ -45,7 +45,7 @@ export const setHotels = (items) => {
     }
 }
 
-export const openPage = (pageType, info) => {
+const openPageInternal = (pageType, info) => {
     return {
         type: actions.OPEN_PAGE,
         data:{
@@ -54,6 +54,15 @@ export const openPage = (pageType, info) => {
         }
     }
 }
+
+export const openPage = (pageType, info) => {
+  return function (dispatch, getState) {
+        let openPageAction = openPageInternal(pageType, info);
+        dispatch(openPageAction);
+        dispatch(selectTab(getState().pages.findIndex(it => it == openPageAction.data)))
+  }
+}
+
 
 export const replacePage = (index, pageType, info) => {
     return {
@@ -76,7 +85,7 @@ export const closePage = (index) => {
 export const search = () => {
   return function (dispatch, getState) {
     dispatch(loadingStart())
-        return getHotels(getState().filter)
+        return getHotels(getState().filter, getState().hotels.pager)
             .then(items => {
                 dispatch(setHotels(items));
                 dispatch(setPager({ total: 25 }));
@@ -92,10 +101,9 @@ export const search = () => {
 export const showHotel = (hotelCode, pageType) => {
   return function (dispatch, getState) {
     dispatch(loadingStart())
-        return getHotel(hotelCode)
+        return getHotel(hotelCode, getState().filter)
             .then(item =>{
-                dispatch(openPage(pageType, 
-                    Object.assign({}, item, { title: item.Code})))
+                dispatch(openPage(pageType, item))
                 dispatch(loadingFinish())
             },
             error => {

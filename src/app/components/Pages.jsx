@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import HotelInfo from './presenters/HotelInfo'
+import HotelInfo from './HotelInfo'
 import BookingInfo from './presenters/BookingInfo'
 import BookingForm from './BookingForm'
 import HotelsList from './HotelsList'
 import pageTypes from './PageTypes'
 
-import { Button, ButtonToolbar, Grid, Row, Col, Panel, Tabs, Tab } from 'react-bootstrap'
+import { Button, ButtonToolbar, Grid, Row, Col, Panel, Tabs, Tab, Glyphicon } from 'react-bootstrap'
 
 
 const mapStateToProps = (state) => {
@@ -19,10 +19,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onBack: (key) =>
+        onClose: (key, currentPage) =>{
             dispatch(
                 actions.closePage(key)
-            ),
+            )
+            if(key == currentPage)
+             dispatch(
+                actions.selectTab(-1)
+            )
+        }
+            ,
         onSelect: (key) =>
             dispatch(
                 actions.selectTab(key)
@@ -43,21 +49,14 @@ const getPage = ( { pageType, info }, index) => {
     }
 }
 
-const pagesMarkup = ({ items, onBack, search, selectedTab, onSelect }) => {
-    return (
-    <Tabs defaultActiveKey={-1} activeKey={selectedTab} onSelect={onSelect} lg={9} md={9} animation={false}>
-        <Tab eventKey={-1} key={-1} title="Results">
-            <HotelsList />
-        </Tab>
-        {items.map((it, ind) =>{ 
-            var page = getPage(it, ind);
-            return (
-            <Tab eventKey={ind} key={ind} title={it.info.title}>      
-                {page}
-            </Tab>
-        )})}
-    </Tabs>
-)}
+const pagesMarkup = ({ items, onClose, search, selectedTab, onSelect }) => {
+    if(!items.length)
+    {
+        return <HotelsList />
+    }
+    var lastPage = getPage(items[items.length - 1], items.length - 1);
+            
+    return (lastPage)}
 
 const Pages = connect(
    mapStateToProps,

@@ -1,0 +1,71 @@
+{
+    "code": "epic",
+  "name": "EPIC Miami, a Kimpton Hotel ",
+  "isSeasonal": false,
+  "location": "Miami, Florida, USA",
+  "description": "This luxury Miami hotel is in the center of the city’s financial district and offers views of the Miami River and Biscayne Bay. It is eco-friendly and features a full-service marina and spa.",
+  "currencyCode": "USD",
+  "mainImageUrl": "http://goo.gl/g4jLbY",
+  "imageUrls": [
+    "http://goo.gl/FPA7MU",
+    "http://goo.gl/3vTmGR",
+    "http://goo.gl/l0Ehbe"
+  ],
+  "facilities": [
+    "SwimmingPool",
+    "WaterSlide"
+  ],
+  "roomTypes": [
+    {
+      "id": 1,
+      "name": "EPIC Cityview King",
+      "description": "This single room has a balcony and air conditioner.",
+      "bedType": "Single",
+      "facilities": [
+        "AirConditioner",
+        "Balcony"
+      ],
+      "imageUrls": [
+        "http://goo.gl/im9kRl",
+        "http://goo.gl/23AK0o",
+        "http://goo.gl/Wyjizq"
+      ],
+      "price": 1121,
+      "roomsAvailable": 3
+    },
+    {
+      "id": 2,
+      "name": "EPIC Cityview Double Double",
+      "description": "This double room has a view to the swimming pool.",
+      "bedType": "Double",
+      "facilities": [
+        "SwimmingPoolView"
+      ],
+      "imageUrls": [
+        "http://r-ec.bstatic.com/images/hotel/square60/176/17636480.jpg",
+        "http://q-ec.bstatic.com/images/hotel/square60/609/60987564.jpg"
+      ],
+      "price": 1083,
+      "roomsAvailable": 10
+    },
+    {
+      "id": 3,
+      "name": "Double Room with Two Double Beds and Water View",
+      "description": "This double room features air conditioner, tv and a view to the swimming pool",
+      "bedType": "Double",
+      "facilities": [
+        "AirConditioner",
+        "Tv",
+        "SwimmingPoolView"
+      ],
+      "imageUrls": [
+        "http://r-ec.bstatic.com/images/hotel/840x460/509/50988026.jpg",
+        "http://q-ec.bstatic.com/images/hotel/840x460/334/33400412.jpg",
+        "http://r-ec.bstatic.com/images/hotel/840x460/140/14027671.jpg"
+      ],
+      "price": 1446,
+      "roomsAvailable": 8
+    }
+  ],
+  "seasons": []
+}

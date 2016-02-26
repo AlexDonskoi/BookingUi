@@ -1,0 +1,57 @@
+{
+  "code": "four-season",
+  "name": "Beverly Wilshire, A Four Seasons Hotel",
+  "isSeasonal": true,
+  "location": "Beverly Hills, Los Angeles, California, USA",
+  "description": "A Mediterranean-style pool and hot tub with private cabanas is featured at this Beverly Hills resort. Rooms offer a flat-screen cable TV. Venice Beach is 15.3 km away.",
+  "currencyCode": "USD",
+  "mainImageUrl": "http://q-ec.bstatic.com/images/hotel/square200/609/60987551.jpg",
+  "imageUrls": [
+    "http://q-ec.bstatic.com/images/hotel/840x460/609/60987547.jpg",
+    "http://r-ec.bstatic.com/images/hotel/840x460/609/60987885.jpg",
+    "http://r-ec.bstatic.com/images/hotel/840x460/609/60987889.jpg"
+  ],
+  "facilities": [],
+  "roomTypes": [
+    {
+      "id": 7,
+      "name": "Doulbe Studio With Sea View",
+      "description": "Also known as the BW Studio, the studio is on the 2nd to 9th floors of the Wilshire Wing and the 2nd to 12th floors of the Beverly Wing with views of the porte cochère.",
+      "bedType": "Double",
+      "facilities": [
+        "SeaView",
+        "Balcony"
+      ],
+      "imageUrls": [
+        "http://q-ec.bstatic.com/images/hotel/square60/609/60987564.jpg"
+      ],
+      "price": 3940,
+      "roomsAvailable": 8
+    },
+    {
+      "id": 8,
+      "name": "Deluxe Simple Double Room",
+      "description": "A flat-screen cable TV, DVD player, and guest bathroom are all included.",
+      "bedType": "Double",
+      "facilities": [
+        "Tv"
+      ],
+      "imageUrls": [
+        "http://q-ec.bstatic.com/images/hotel/square60/609/60987570.jpg",
+        "http://q-ec.bstatic.com/images/hotel/square60/609/60987564.jpg"
+      ],
+      "price": 5180,
+      "roomsAvailable": 5
+    }
+  ],
+  "seasons": [
+    {
+      "startDate": "2016-02-22T00:00:00Z",
+      "endDate": "2016-03-14T00:00:00Z"
+    },
+    {
+      "startDate": "2016-03-15T00:00:00Z",
+      "endDate": "2016-04-05T00:00:00Z"
+    }
+  ]
+}

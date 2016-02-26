@@ -14,6 +14,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
+    "isomorphic-fetch": "^2.2.1",
     "mocha": "^2.4.5",
     "moment": "^2.11.2",
     "react": "^0.14.7",

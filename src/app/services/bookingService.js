@@ -1,4 +1,4 @@
-import timeout from './stub/timeout'
+import timeout from './timeout'
 
 export const sendBooking = (state) => {
     return new Promise(

@@ -18,7 +18,7 @@ export const pages = (state = [], action) => {
 export const selectedTab = (state = -1, action) => {
    switch (action.type) {
     case actions.SELECT_TAB:
-      return action.key;
+      return action.key;      
     case actions.SET_HOTELS:
     case actions.SET_PAGER:
       return -1;
