@@ -23,12 +23,12 @@ const items = (state = [], action) => {
   }
 }
 
-const setPager = (key, state, action) => {
+const setPager = (key, state, action, initState) => {
    switch (action.type) {
     case actions.SET_PAGER:
-      return action.pager[key] || state;
+      return action.pager[key] === undefined ? state : action.pager[key];
    default:
-      return state;
+      return initState;
   }
 }
 
@@ -37,17 +37,18 @@ let initPager = {
     total: 0,
     perPage: 10,
     activePage: 1,
-    sort: 0
+    sort: 0,
+    asc: true
 }
 
-const pager = combineReducers(
-    Object.keys(initPager).reduce(
-        (aggr, key, index) =>{
-            aggr[key] = (state, action) => setPager(key, state, action) || initPager[key]
-            return aggr;
-        }, 
-        {})
-)
+const pager = (state = initPager, action)  => {
+    switch (action.type) {
+    case actions.SET_PAGER:
+      return Object.assign({}, state, action.pager);
+   default:
+      return state;
+  }
+}
 
 export const hotels = combineReducers({
     isLoaded,

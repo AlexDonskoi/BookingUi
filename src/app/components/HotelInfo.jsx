@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onBackClick: () => 
             dispatch(
-                actions.closePage(ownProps.index)
+                actions.closePage()
             ),
         onRoomsClick: () => 
             dispatch(
@@ -28,7 +28,7 @@ const HotelInfo = ( { hotel, availableCount, onBackClick, onRoomsClick  }) =>  (
         <Row>
             <Row>
                 <Col lg={12} md={12}>
-                   <Button onClick={onBackClick} bsStyle="link">Back to search result</Button>
+                   <Button onClick={onBackClick} bsStyle="link">Back to list</Button>
                 </Col>
             </Row>
             <Row>

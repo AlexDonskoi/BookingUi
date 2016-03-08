@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 var filter = require('./filter')
 var hotels = require('./hotel')
-var pages = require('./pages')
+var page = require('./page')
 var error = require('./error')
 
 const app = () => combineReducers(
@@ -9,7 +9,7 @@ const app = () => combineReducers(
         {},
         filter,
         hotels,
-        pages,
+        page,
         error)
 )
 

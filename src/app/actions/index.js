@@ -47,7 +47,7 @@ export const setHotels = (items) => {
 
 const openPageInternal = (pageType, info) => {
     return {
-        type: actions.OPEN_PAGE,
+        type: actions.SET_PAGE,
         data:{
             pageType,
             info
@@ -59,26 +59,12 @@ export const openPage = (pageType, info) => {
   return function (dispatch, getState) {
         let openPageAction = openPageInternal(pageType, info);
         dispatch(openPageAction);
-        dispatch(selectTab(getState().pages.findIndex(it => it == openPageAction.data)))
   }
 }
 
-
-export const replacePage = (index, pageType, info) => {
+export const closePage = () => {
     return {
-        type: actions.REPLACE_PAGE,
-        data:{
-            pageType,
-            info
-        },
-        index
-    }
-}
-
-export const closePage = (index) => {
-    return {
-        type: actions.CLOSE_PAGE,
-        index
+        type: actions.CLOSE_PAGE
     }
 }
 
@@ -86,9 +72,9 @@ export const search = () => {
   return function (dispatch, getState) {
     dispatch(loadingStart())
         return getHotels(getState().filter, getState().hotels.pager)
-            .then(items => {
-                dispatch(setHotels(items));
-                dispatch(setPager({ total: 25 }));
+            .then(result => {
+                dispatch(setHotels(result.items));
+                dispatch(setPager({ total: result.total }));
                 dispatch(loadingFinish())
             },
             error => {
@@ -113,15 +99,14 @@ export const showHotel = (hotelCode, pageType) => {
   }
 }
 
-export const tryBooking = (bookingInfo, index, bookingPageType) => {
+export const tryBooking = (bookingInfo, bookingPageType) => {
   return function (dispatch, getState) {
     dispatch(loadingStart())
-        return sendBooking(bookingInfo)
+        return sendBooking(Object.assign({}, bookingInfo, getState().filter))
             .then(item =>{
-                dispatch(replacePage(
-                    index,
+                dispatch(openPage(
                     bookingPageType, 
-                    Object.assign({}, bookingInfo, { title: "Confirmation"})))
+                    item))
                 dispatch(loadingFinish())
             },
             error => {
@@ -138,7 +123,7 @@ export const searchBooking = (bookingNumber, bookingPageType) => {
             .then(item =>{
                 dispatch(openPage(
                     bookingPageType, 
-                    Object.assign({}, {"number": bookingNumber}, { title: "Confirmation"})))
+                    item))
                 dispatch(loadingFinish())
             },
             error => {
@@ -148,19 +133,9 @@ export const searchBooking = (bookingNumber, bookingPageType) => {
   }
 }
 
-
-
 export const setError = (content) => {
     return {
         type: actions.SET_ERROR,
         content
-    }
-}
-
-
-export const selectTab = (key) => {
-    return {
-        type: actions.SELECT_TAB,
-        key
     }
 }

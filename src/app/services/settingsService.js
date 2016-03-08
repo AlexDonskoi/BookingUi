@@ -1,4 +1,5 @@
 import Settings from './Settings'
+import moment from 'moment'
 
 export const getHotelFacilitiesByKeys = (keys) => {
     let allItems = (Settings.SearchGroups.find(it => it.Key == "HotelFacilities") || {}).Items;
@@ -20,6 +21,14 @@ export const getRoomFacilitiesByKeys = (keys) => {
                             .filter(f => !!f);
 }
 
+export const getSearchGroups = () => {
+    return Settings.SearchGroups
+}
+
+export const getSortItems = () => {
+    return Settings.SortBy
+}
+
 export const getBedTypeByKey = (key) => {
     let allItems = (Settings.SearchGroups.find(it => it.Key == "BedTypes") || {}).Items;
     if(!allItems)
@@ -27,4 +36,12 @@ export const getBedTypeByKey = (key) => {
         return null
     }
     return allItems.find(it => it.Key == key);
+}
+
+export const getApiUrl = () => {
+    return Settings.Api;
+}
+
+export const toDateFormat = (date) => {
+    return moment(date).format(Settings.DateFormat);
 }

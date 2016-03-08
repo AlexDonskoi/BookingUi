@@ -1,19 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button, Col, Row, Grid, Pagination, ButtonToolbar, Modal, Tab } from 'react-bootstrap'
+import { Button, Col, Row, Grid, Pagination, ButtonToolbar, Modal, Tab, Glyphicon } from 'react-bootstrap'
 import * as actions from '../actions'
 import pageTypes from './pageTypes'
 import HotelCard from './presenters/HotelCard'
-import { getHotelFacilitiesByKeys } from '../services/SettingsService'
-
+import { getHotelFacilitiesByKeys, getSortItems } from '../services/SettingsService'
 
 const mapStateToProps = (state) => {
     return {
         items: state.hotels.items || [],
-        isHidden: !!state.pages.length,
         totalPages: Math.ceil((state.hotels.pager.total || 0) / (state.hotels.pager.perPage || 1)),
         activePage: state.hotels.pager.activePage || 1,
-        isLoaded: !!state.hotels.isLoaded
+        isLoaded: !!state.hotels.isLoaded,
+        sortItems: getSortItems().map(it => {
+            return {
+                Key: it.Key,
+                Text: it.Text,
+                IsSort: it.Key == state.hotels.pager.sort,
+                Asc: state.hotels.pager.asc
+            }
+        })
     }
 }
 
@@ -31,10 +37,11 @@ const mapDispatchToProps = (dispatch) => {
                 actions.search()
             )
         },
-        onSortClick: (sortItem) => {
+        onSortClick: (sortItem, direction) => {
             dispatch(
                 actions.setPager({ 
                     sort: sortItem,
+                    asc: direction,
                     activePage: 1
                 })
             );
@@ -45,8 +52,13 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
+const getSortGlyph = ({IsSort, Asc}) =>{
+    if(!IsSort)
+        return null;
+    return <Glyphicon glyph={ Asc ? "triangle-bottom" : "triangle-top"} />
+}
 
-const hotelList = ({ isLoaded, items, isHidden, totalPages, activePage, onClick, onPageClick, onSortClick }) => (
+const hotelList = ({ isLoaded, items, totalPages, activePage, sortItems, onClick, onPageClick, onSortClick }) => (
     <div lg={9} md={9} className={ "modal-container" }>
         <Modal
           show={isLoaded}
@@ -55,9 +67,12 @@ const hotelList = ({ isLoaded, items, isHidden, totalPages, activePage, onClick,
         </Modal>
         
         <ButtonToolbar>
-            <Button bsStyle="link" onClick={() => onSortClick(0)}>sort by 0</Button>
-            <Button bsStyle="link" onClick={() => onSortClick(1)}>sort by 1</Button>
-            <Button bsStyle="link" onClick={() => onSortClick(2)}>sort by 2</Button>
+        {
+            sortItems.map(it => (
+                <Button key={it.Key} bsStyle="link" onClick={() => onSortClick(it.Key, !it.IsSort || !it.Asc)} >{it.Text} {getSortGlyph(it)}</Button>
+            ))
+        }
+            
         </ButtonToolbar>
         
         {items.map(it => {

@@ -1,0 +1,34 @@
+{
+  "reference": "f616565f-bd3d-4b50-b2a3-56b85e1cdd94",
+  "hotelCode": "epic",
+  "hotelName": "EPIC Miami, a Kimpton Hotel ",
+  "hotelLocation": "Miami, Florida, USA",
+  "hotelMainImageUrl": "http://goo.gl/g4jLbY",
+  "guestName": "John Smith",
+  "guestPhone": "12345",
+  "checkInDate": "2016-01-01T00:00:00",
+  "checkOutDate": "2016-01-21T00:00:00",
+  "comment": "Non-smoking room",
+  "roomTypes": [
+    {
+      "id": 1,
+      "roomsCount": 2,
+      "facilities": [
+        "AirConditioner",
+        "Balcony"
+      ],
+      "bedType": "Single"
+    },
+    {
+      "id": 2,
+      "roomsCount":4,
+      "facilities": [
+        "AirConditioner",
+        "Balcony"
+      ],
+      "bedType": "Twin"
+    }
+  ],
+  "currencyCode": "USD",
+  "totalPrice": 2242
+}

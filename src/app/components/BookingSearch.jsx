@@ -42,10 +42,18 @@ const BookingSearch = React.createClass({
         });
     },
     
+    handleKeyPress: function(e){
+        if("Enter" == e.key)
+        {
+            this.handleSearch();
+        }
+    },
+    
     render: function(){
         let searchButton = <Button onClick={this.handleSearch} disabled={this.getButtonState()}>Go</Button>
         return (
-            <Input type="text" ref="booking" onChange={this.handleChange} addonBefore="find booking:" buttonAfter={searchButton} />
+            <Input type="text" ref="booking" value={this.state.value} onKeyPress={this.handleKeyPress} 
+                onChange={this.handleChange} addonBefore="find booking:" buttonAfter={searchButton} />
         )
     }
 })

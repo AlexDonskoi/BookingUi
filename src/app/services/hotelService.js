@@ -1,19 +1,18 @@
-import fetch from 'isomorphic-fetch'
-import moment from 'moment'
-import Settings from './Settings'
+import { getApiUrl, toDateFormat, getSearchGroups} from './settingsService'
+import fetch from './etagJsonService'
 
 const getFilterQuery = (filter) => {
     let queryStringArray = [];
     if(filter.startDate)
     {
-        queryStringArray.push(`CheckInDate=${moment(filter.startDate).format(Settings.DateFormat)}`)
+        queryStringArray.push(`CheckInDate=${toDateFormat(filter.startDate)}`)
     }
     if(filter.endDate)
     {
-        queryStringArray.push(`CheckOutDate=${moment(filter.endDate).format(Settings.DateFormat)}`)
+        queryStringArray.push(`CheckOutDate=${toDateFormat(filter.endDate)}`)
     }
     
-    Settings.SearchGroups.forEach(it => {
+    getSearchGroups().forEach(it => {
         var values = filter[it.Key];
         if(values)
         {
@@ -35,24 +34,21 @@ export const getHotels = (filter, pager) => {
         queryStringArray.push(`PageSize=${pager.perPage}`)
     }
     
-    return fetch(`${Settings.Api}/src/app/services/stub/hotels.json?${queryStringArray.join("&")}`, 
-    {
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        }
-    })
-    .then(response => response.json())
+    return fetch(`${getApiUrl()}/src/app/services/stub/hotels.json?${queryStringArray.join("&")}`)
+    .then(response =>
+        response.json()
+            .then(json =>
+            {
+                return {
+                        total: response.headers.get("X-Total-Count"),
+                        items: json
+                    }
+            })
+    )
 }
 
 export const getHotel = (hotelCode, filter) => {
     let queryStringArray = getFilterQuery(filter);
-    return fetch(`${Settings.Api}/src/app/services/stub/hotels/${hotelCode}.json?${queryStringArray.join("&")}`, 
-    {
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        }
-    })
-    .then(response => response.json())
+    return fetch(`${getApiUrl()}/src/app/services/stub/hotels/${hotelCode}.json?${queryStringArray.join("&")}`)
+    .then(result => result.json())
 }

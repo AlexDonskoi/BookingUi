@@ -8,7 +8,7 @@ const Error = React.createClass({
             return <div />
          return (
             <Alert bsStyle="danger" onDismiss={onDismiss}>
-                {content.message}
+                <p>{content.toString()}</p>
             </Alert>)
     }
 });
@@ -17,7 +17,7 @@ const Error = React.createClass({
 Error.propTypes = {
     content: PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.element
+        PropTypes.object
     ]),
     onDismiss: PropTypes.func.isRequired
 }

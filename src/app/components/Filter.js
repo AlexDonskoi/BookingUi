@@ -2,13 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import FilterPanel from './presenters/FilterPanel'
-import Settings from '../services/Settings'
+import { getSearchGroups} from '../services/settingsService'
 
 const mapStateToProps = (state) => {
     return {
         startDate: state.filter.startDate,
         endDate: state.filter.endDate,
-        searchGroups: Settings.SearchGroups.map(grp => {
+        searchGroups: getSearchGroups().map(grp => {
             return {
                 Key: grp.Key,
                 Text: grp.Text,
@@ -33,9 +33,6 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(
                 actions.setPager({ activePage: 1})
             );
-            dispatch(
-                actions.search()
-            )
         },
         onFilterChanged: (filter) => {
             dispatch(
